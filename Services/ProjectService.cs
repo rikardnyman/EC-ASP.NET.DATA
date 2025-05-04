@@ -1,4 +1,5 @@
-﻿using Data.Entities;
+﻿using Data.Dtos;
+using Data.Entities;
 using Data.Repositories;
 
 namespace Data.Services
@@ -10,6 +11,7 @@ namespace Data.Services
         Task<bool> DeleteProject(int id);
         Task<ProjectEntity?> GetProjectById(int id);
         Task<List<ProjectEntity>> GetAllProjects();
+        
     }
 
     public class ProjectService : IProjectService

@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace Data.Entities
 {
     public class UserEntity : IdentityUser
     {
+        
         public string FullName { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string Client { get; set; } = null!;
