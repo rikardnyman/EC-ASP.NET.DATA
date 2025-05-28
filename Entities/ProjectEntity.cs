@@ -7,9 +7,9 @@ namespace Data.Entities
     {
         [Key]
         public string Id { get; set; } = Guid.NewGuid().ToString();
-        public string? Image { get; set; }
+        public string? ImagePath { get; set; }
         public string ProjectName { get; set; } = null!;
-       
+
         public string? Description { get; set; }
 
         [Column(TypeName = "date")]
@@ -17,22 +17,37 @@ namespace Data.Entities
 
         [Column(TypeName = "date")]
         public DateTime? EndDate { get; set; }
-        public decimal? Budget { get; set; }
+        public string? Budget { get; set; }
 
-
-
-        [ForeignKey(nameof(ClientId))]
-        public string ClientId { get; set; } = null!;
-        public virtual ClientEntity Client { get; set; } = null!;
-
-
-        [ForeignKey(nameof(UserId))]
-        public string UserId { get; set; } = null!;
-        public virtual UserEntity User { get; set; } = null!;
-
-
-        [ForeignKey(nameof(StatusId))]
+        public StatusEntity? Status { get; set; }
         public int StatusId { get; set; }
-        public virtual StatusEntity Status { get; set; } = null!;
+
+
+        [ForeignKey("ClientId")]
+        public ClientEntity? Client { get; set; }
+
+        public int ClientId { get; set; }
+
+
+
+
+
+        public ProjectEntity ToEntity()
+        {
+            return new ProjectEntity
+            {
+                Id = this.Id,
+                ImagePath = this.ImagePath,
+                ProjectName = this.ProjectName,
+                Description = this.Description,
+                StartDate = this.StartDate,
+                EndDate = this.EndDate,
+                Budget = this.Budget,
+                ClientId = this.ClientId,
+                StatusId = this.StatusId
+
+            };
+        }
+
     }
 }

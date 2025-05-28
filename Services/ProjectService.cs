@@ -1,17 +1,17 @@
-﻿using Data.Dtos;
-using Data.Entities;
+﻿using Data.Entities;
 using Data.Repositories;
+
 
 namespace Data.Services
 {
     public interface IProjectService
     {
         Task<ProjectEntity> CreateProject(ProjectEntity project);
-        Task<ProjectEntity?> UpdateProject(int id, ProjectEntity project);
-        Task<bool> DeleteProject(int id);
-        Task<ProjectEntity?> GetProjectById(int id);
+        Task<ProjectEntity?> UpdateProject(string id, ProjectEntity project);
+        Task<bool> DeleteProject(string id);
+        Task<ProjectEntity?> GetProjectById(string id);
         Task<List<ProjectEntity>> GetAllProjects();
-        
+
     }
 
     public class ProjectService : IProjectService
@@ -29,17 +29,17 @@ namespace Data.Services
             return await _projectRepository.CreateProject(project);
         }
 
-        public async Task<ProjectEntity?> UpdateProject(int id, ProjectEntity updatedProject)
+        public async Task<ProjectEntity?> UpdateProject(string id, ProjectEntity updatedProject)
         {
             return await _projectRepository.UpdateProject(id, updatedProject);
         }
 
-        public async Task<bool> DeleteProject(int id)
+        public async Task<bool> DeleteProject(string id)
         {
             return await _projectRepository.DeleteProject(id);
         }
 
-        public async Task<ProjectEntity?> GetProjectById(int id)
+        public async Task<ProjectEntity?> GetProjectById(string id)
         {
             return await _projectRepository.GetProjectById(id);
         }

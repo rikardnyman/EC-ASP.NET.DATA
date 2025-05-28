@@ -3,14 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
 {
-
     public interface IProjectRepository
     {
         Task<List<ProjectEntity>> GetAllProjects();
-        Task<ProjectEntity?> GetProjectById(int id);
+        Task<ProjectEntity?> GetProjectById(string id);
         Task<ProjectEntity> CreateProject(ProjectEntity project);
-        Task<ProjectEntity?> UpdateProject(int id, ProjectEntity project);
-        Task<bool> DeleteProject(int id);
+        Task<ProjectEntity?> UpdateProject(string id, ProjectEntity project);
+        Task<bool> DeleteProject(string id);
     }
 
     public class ProjectRepository : IProjectRepository
@@ -27,59 +26,76 @@ namespace Data.Repositories
             return await _context.Projects
                 .Include(p => p.Client)
                 .Include(p => p.Status)
-                .Include(p => p.User)
                 .ToListAsync();
         }
 
 
-        public async Task<ProjectEntity?> GetProjectById(int id)
+        public async Task<ProjectEntity?> GetProjectById(string id)
         {
             return await _context.Projects.FindAsync(id);
         }
 
-        public async Task<ProjectEntity> CreateProject(ProjectEntity project)
+        public async Task<ProjectEntity> CreateProject(ProjectEntity newProject)
         {
-            ArgumentNullException.ThrowIfNull(project);
+            if (newProject == null)
+                throw new ArgumentNullException(nameof(newProject));
 
-            var client = await GetClientOrThrowAsync(project.ClientId);
-            project.Client = client;
 
-            var status = await _context.Statuses.FindAsync(project.StatusId);
-            project.Status = status ?? throw new ArgumentNullException("Status not found");
+            ClientEntity? client = await _context.Clients.FindAsync(newProject.ClientId);
+            if (client == null)
+                throw new ArgumentException("Client not found");
 
-            _context.Projects.Add(project);
+
+            StatusEntity? status = await _context.Statuses.FindAsync(newProject.StatusId);
+            if (status == null)
+                throw new ArgumentException("Status not found");
+
+
+            newProject.Client = client;
+            newProject.Status = status;
+
+
+            _context.Projects.Add(newProject);
             await _context.SaveChangesAsync();
 
-            return project;
+            return newProject;
         }
 
-        public async Task<ProjectEntity?> UpdateProject(int id, ProjectEntity updatedProject)
-        {
-            ArgumentNullException.ThrowIfNull(updatedProject);
 
-            var existingProject = await _context.Projects.FindAsync(id);
+        public async Task<ProjectEntity?> UpdateProject(string id, ProjectEntity updatedProject)
+        {
+            if (updatedProject == null) throw new ArgumentNullException(nameof(updatedProject));
+
+            ProjectEntity? existingProject = await _context.Projects.FindAsync(id);
             if (existingProject == null) return null;
 
-            var client = await GetClientOrThrowAsync(updatedProject.ClientId);
+            ClientEntity? client = await _context.Clients.FindAsync(updatedProject.ClientId);
+            if (client == null)
+            {
+                throw new ArgumentNullException("Client not found");
+            }
 
-            existingProject.Client = client;
+            existingProject.Client = updatedProject.Client;
+            existingProject.ClientId = updatedProject.ClientId;
+            existingProject.ImagePath = updatedProject.ImagePath;
             existingProject.ProjectName = updatedProject.ProjectName;
             existingProject.Description = updatedProject.Description;
+            existingProject.Status = updatedProject.Status;
             existingProject.StatusId = updatedProject.StatusId;
             existingProject.StartDate = updatedProject.StartDate;
             existingProject.EndDate = updatedProject.EndDate;
             existingProject.Budget = updatedProject.Budget;
+
+
 
             await _context.SaveChangesAsync();
 
             return existingProject;
         }
 
-        public async Task<bool> DeleteProject(int id)
+        public async Task<bool> DeleteProject(string id)
         {
-            if (id <= 0) return false;
-
-            var project = await _context.Projects.FindAsync(id);
+            ProjectEntity? project = await _context.Projects.FindAsync(id);
             if (project == null) return false;
 
             _context.Projects.Remove(project);
@@ -87,13 +103,5 @@ namespace Data.Repositories
 
             return true;
         }
-
-        private async Task<ClientEntity> GetClientOrThrowAsync(string clientId)
-        {
-            var client = await _context.Clients.FindAsync(clientId);
-            return client ?? throw new ArgumentNullException("Client not found");
-        }
     }
-
 }
-

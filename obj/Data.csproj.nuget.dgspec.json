@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Rikard\\Data\\Data.csproj": {}
+    "C:\\Code\\Data\\Data.csproj": {}
   },
   "projects": {
-    "C:\\Rikard\\Data\\Data.csproj": {
+    "C:\\Code\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Rikard\\Data\\Data.csproj",
+        "projectUniqueName": "C:\\Code\\Data\\Data.csproj",
         "projectName": "Data",
-        "projectPath": "C:\\Rikard\\Data\\Data.csproj",
-        "packagesPath": "C:\\Users\\lollo\\.nuget\\packages\\",
-        "outputPath": "C:\\Rikard\\Data\\obj\\",
+        "projectPath": "C:\\Code\\Data\\Data.csproj",
+        "packagesPath": "C:\\Users\\Rikard Nyman\\.nuget\\packages\\",
+        "outputPath": "C:\\Code\\Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\lollo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Rikard Nyman\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -56,15 +57,17 @@
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[9.0.4, )"
+              "version": "[9.0.5, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.4, )"
+              "version": "[9.0.5, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[9.0.4, )"
+              "version": "[9.0.5, )"
             }
           },
           "imports": [
@@ -83,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files (x86)\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

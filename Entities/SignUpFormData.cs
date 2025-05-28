@@ -1,4 +1,4 @@
-﻿namespace Data.Dtos
+﻿namespace Data.Entities
 {
     public class SignUpFormData
     {

@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using System.Linq.Expressions;
-using Data.Contexts;
+﻿using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace Data.Repositories
 {
@@ -20,9 +20,9 @@ namespace Data.Repositories
         public virtual async Task<bool> AddAsync(TEntity entity)
         {
             if (entity == null)
-            
+
                 return false;
-                
+
             try
             {
                 _table.Add(entity);
@@ -31,7 +31,7 @@ namespace Data.Repositories
             }
             catch (Exception ex)
             {
-               
+
                 Debug.WriteLine(ex.Message);
                 return false;
             }
@@ -40,11 +40,11 @@ namespace Data.Repositories
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-         var entities = await _table.ToListAsync();
+            var entities = await _table.ToListAsync();
             return entities;
         }
 
-        public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool >> findBy)
+        public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> findBy)
         {
             var entity = await _table.FirstOrDefaultAsync(findBy);
             return entity ?? null!;
@@ -71,7 +71,7 @@ namespace Data.Repositories
             }
             catch (Exception ex)
             {
-                
+
                 Debug.WriteLine(ex.Message);
                 return false;
             }
@@ -91,7 +91,7 @@ namespace Data.Repositories
             }
             catch (Exception ex)
             {
-               
+
                 Debug.WriteLine(ex.Message);
                 return false;
             }
